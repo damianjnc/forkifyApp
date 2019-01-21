@@ -1,9 +1,17 @@
 import {elements} from './base';
 
 export const getInput = () => elements.searchInput.value;
+
 export const clearInput = () => {
     elements.searchInput.value = '';
 };
+
+export const clearResults = () => {
+    elements.searchResList.innerHTML = '';
+};
+
+
+//const limitRecipeTitle = () => 
 
 const renderRecipe = recipe => {
     const markup = `<li>
@@ -21,5 +29,5 @@ const renderRecipe = recipe => {
 };
 
 export const renderResults = recipes => {
-    recipes.forEach(renderRecipe);
+    recipes.forEach(recipe => renderRecipe(recipe));
 };
