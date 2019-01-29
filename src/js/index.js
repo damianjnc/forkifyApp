@@ -4,6 +4,7 @@ import Search from './models/Search';
 import Recipe from './models/Recipe';
 import {elements, renderLoader, clearLoader} from './views/base';
 import * as searchView from './views/SearchView';
+import * as recipeView from './views/recipeView';
 
 /*Global state of the app
 * Search object
@@ -73,21 +74,23 @@ const controlRecipe = async () => {
   console.log(id);
   if(id){
       //Prepare UI for changes
-
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
       //Create a new recipe object
 
       state.recipe = new Recipe(id);
-      //TESTING
-      window.r = state.recipe;
+
 
       try{
-          //Get recipe data
+          //Get recipe data and parse ingredients
           await state.recipe.getRecipe();
+          state.recipe.parseIngredients();
           //Calculate serving and time
           state.recipe.calcTime();
           state.recipe.calcSevings();
           //Render recipe
-          console.log(state.recipe);
+          clearLoader();
+          recipeView.renderRecipe(state.recipe);
       }catch (error) {
           alert('error processing the recipe:(');
 
