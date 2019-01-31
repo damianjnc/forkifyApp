@@ -83,4 +83,34 @@ export default class Recipe {
         this.ingredients = newIngredients;
     }
 
+    capDecimal(num) {
+        // Cap decimals to 5 digits and round, but don't add zeros to shorter decimals
+        if (typeof num === 'number') {
+        return +(Math.round(num + 'e+5') + 'e-5');
+        }
+       }
+
+    updateServings(type) {
+        // Servings
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+        
+        // Ingredients
+        this.ingredients.forEach((ingr) => {
+        ingr.count = this.capDecimal(ingr.count * (newServings / this.servings));
+        });
+        this.servings = newServings;
+       }
+/*
+    updateServings (type){
+        //Servings 
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+        //Ingredients
+        this.ingredients.forEach(ing => {
+            ing.count *= (newServings / this.servings);   
+        });
+
+        this.servings = newServings;
+    }
+    */
+       
 }
