@@ -14,7 +14,7 @@ export const renderItem = item => {
             </svg>
         </button>
     `;
-    elements.shopping.insertAdjacentElement('beforeend')
+    elements.shopping.insertAdjacentHTML('beforeend', markup);
 };
 
 export const deleteItem = id => {
