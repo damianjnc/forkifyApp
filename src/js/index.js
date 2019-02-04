@@ -18,7 +18,6 @@ import * as listView from './views/listView';
 * */
 
 const state  = {};
-window.state = state; 
 
 /*
 **Search Controller
@@ -150,10 +149,6 @@ const controlRecipe = async () => {
 /**
  * LIKE CONTROLLER
  */
-//TESTING
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes());
-
 
 const controlLike = () => {
   if(!state.likes) state.likes = new Likes();
@@ -178,13 +173,26 @@ const controlLike = () => {
         //Toggle the like button
        likesView.toggleLikeBtn(false);
         //Remove from the UI list
-        likesView.deleteLike( );
+        likesView.deleteLike(currentID);
         console.log(state.likes);
 
     }
     likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
+//Restore liked recipes on page load
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+
+    //Restore likes
+    state.likes.readStorage();
+
+    //Toggle like menu button
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    //Render the existing likes
+    state.likes.likes.forEach( like => likesView.renderLike(like));
+});
 
 //Handling recipe button clicks
 elements.recipe.addEventListener('click', e => {
@@ -209,5 +217,3 @@ elements.recipe.addEventListener('click', e => {
 
 });
 
-
-window.l = new List();
